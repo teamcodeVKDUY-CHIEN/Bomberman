@@ -17,6 +17,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import uet.oop.bomberman.entities.LayeredEntity;
 
 /**
  * Quản lý thao tác điều khiển, load level, render các màn hình của game
@@ -287,6 +288,17 @@ public class Board implements IRender {
 	protected void updateEntities() {
 		if( _game.isPaused() ) return;
 		for (int i = 0; i < _entities.length; i++) {
+                    
+                    // Đoạn này tự sửa
+                        if(_entities[i] instanceof LayeredEntity)
+                        {
+                            if(((LayeredEntity)_entities[i]).sizeEntitie()==1)
+                            {
+                                Entity a = ((LayeredEntity)_entities[i]).getTopEntity();
+                                _entities[i]=a;
+                            }
+                        }
+                    // tự sửa cho tói đây
 			_entities[i].update();
 		}
 	}

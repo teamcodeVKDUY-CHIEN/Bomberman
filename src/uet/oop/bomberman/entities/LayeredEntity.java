@@ -5,6 +5,7 @@ import uet.oop.bomberman.graphics.Screen;
 
 import java.util.LinkedList;
 import uet.oop.bomberman.entities.bomb.Flame;
+import uet.oop.bomberman.entities.tile.Grass;
 
 /**
  * Chứa và quản lý nhiều Entity tại cùng một vị trí

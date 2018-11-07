@@ -137,12 +137,16 @@ public abstract class Enemy extends Character {
 	@Override
 	public boolean collide(Entity e) {
             if (e instanceof Bomber) {
-                int a =this.getXTile();
-                int b= e.getXTile();
-                int c = this.getSprite().getRealWidth();
-                int d = e.getSprite().getRealWidth();
-                if (Math.abs(this.getXTile() - e.getXTile()) < (this.getSprite().getRealWidth() + e.getSprite().getRealWidth()) / 2) {
-                    if (Math.abs(this.getYTile() - e.getYTile()) < (this.getSprite().getRealHeight() + e.getSprite().getRealHeight()) / 2) {
+                double x1 =this.getX();
+                double x2=this.getY();
+                double e1= e.getX();
+                double e2 =e.getY();
+                double z1 = this.getSprite().getRealWidth();
+                double z2 = this.getSprite().getRealHeight();
+                double m1 = e.getSprite().getRealWidth();
+                double m2 = e.getSprite().getRealHeight();
+                if (Math.abs(x1 - e1) < (z1 + m1) / 2) {
+                    if (Math.abs(x2 - e2) < (z2 + m2) / 2) {
                         ((Bomber)e).kill();
                         return false;
                     }

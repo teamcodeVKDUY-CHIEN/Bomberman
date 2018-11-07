@@ -146,7 +146,22 @@ public class Bomber extends Character {
         if (_input.right) {
             xa++;
         }
-        
+         // nói đi
+         
+        if(_input.up || _input.down)
+        {
+           if(_x%16<=9 && _x%16>4)
+               _x = (int)(_x/16)*16+16-Sprite.player_down.getRealWidth();
+           else if((_x - (int)(_x/16)*16)>12)
+               _x = (int)(_x/16)*16+16;
+        }
+        if(_input.left || _input.right)
+        {
+           if(_y%16<=5 )
+               _y = (int)(_y/16)*16;
+           else if((_y - (int)(_y/16)*16)>12)
+               _y = (int)(_y/16)*16+16;
+        }
         if (xa != 0 || ya != 0) {
             move(xa * Game.getBomberSpeed(), ya * Game.getBomberSpeed());
             _moving = true; 

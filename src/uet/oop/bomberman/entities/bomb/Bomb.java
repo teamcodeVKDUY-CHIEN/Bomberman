@@ -1,6 +1,5 @@
 package uet.oop.bomberman.entities.bomb;
 
-import uet.oop.bomberman.entities.character.Character;
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.AnimatedEntitiy;
@@ -9,14 +8,14 @@ import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.level.Coordinates;
+import uet.oop.bomberman.entities.character.Character; 
 
 public class Bomb extends AnimatedEntitiy {
 
 	protected double _timeToExplode = 120; //2 seconds
 	public int _timeAfter = 20;
-	
 	protected Board _board;
-	protected Flame[] _flames;
+	protected Flame[] _flames = null;
 	protected boolean _exploded = false;
 	protected boolean _allowedToPassThru = true;
 	
@@ -76,18 +75,16 @@ public class Bomb extends AnimatedEntitiy {
      * Xử lý Bomb nổ
      */
 	protected void explode() {
-		//_exploded = true;
-//		if(_allowedToPassThru)
-//                {
-//                    
-//                }    
+//		_exploded = true;
+		
 		// TODO: xử lý khi Character đứng tại vị trí Bomb
 		
 		// TODO: tạo các Flame
+                _timeToExplode = 0;
                 _allowedToPassThru = true;
 		_exploded = true;
-		
-		Character a = _board.getCharacterAt(_x, _y);
+                Character a0 = null; 
+		Character a = _board.getCharacterAtExcluding((int)_x, (int)_y, a0); 
 		if(a != null)  {
 			a.kill();
 		}
@@ -97,7 +94,13 @@ public class Bomb extends AnimatedEntitiy {
 		for (int i = 0; i < _flames.length; i++) {
 			_flames[i] = new Flame((int)_x, (int)_y, i, Game.getBombRadius(), _board);
 		}
-        }
+                // xử lý âm thanh nổ. 
+                try{
+                    this.playMusicObject("D:\\Code\\Project2\\BommerOfiical\\musicLevel\\TiengBom-Ver1.wav", 1);
+                }catch(InterruptedException e){
+                    System.out.println(e.getMessage());
+                }
+	}
 	
 	public FlameSegment flameAt(int x, int y) {
 		if(!_exploded) return null;
@@ -115,25 +118,20 @@ public class Bomb extends AnimatedEntitiy {
 	public boolean collide(Entity e) {
         // TODO: xử lý khi Bomber đi ra sau khi vừa đặt bom (_allowedToPassThru)
         // TODO: xử lý va chạm với Flame của Bomb khác
-            if(e instanceof Bomber)
-            {
-                if(_allowedToPassThru)
-                {
+            if(e instanceof Bomber) {
                     double diffX = e.getX() - Coordinates.tileToPixel(getX());
                     double diffY = e.getY() - Coordinates.tileToPixel(getY());
 
-                    if (!(diffX >= -10 && diffX < 16 && diffY >= 1 && diffY <= 28)) {
-                        _allowedToPassThru = false;
+                    if(!(diffX >= -10 && diffX < 16 && diffY >= 1 && diffY <= 28)) { // differences to see if the player has moved out of the bomb, tested values
+                            _allowedToPassThru = false;
                     }
 
                     return _allowedToPassThru;
-                }
             }
 
-            if(e instanceof Flame)
-            {
-                _timeToExplode=0;
-                return true;
+            if(e instanceof Flame) {
+                    _timeToExplode=0;
+                    return true;
             }
 
             return false;

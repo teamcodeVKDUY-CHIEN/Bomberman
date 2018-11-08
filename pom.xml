@@ -4,7 +4,7 @@
     <artifactId>bomberman</artifactId>
     <version>v0.1</version>
 
-    <name>Bomberman</name>
+    <name>BombermanOffical</name>
 
     <build>
         <directory>target</directory>

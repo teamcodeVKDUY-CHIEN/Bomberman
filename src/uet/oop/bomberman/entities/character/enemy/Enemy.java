@@ -13,11 +13,8 @@ import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.level.Coordinates;
 
 import java.awt.*;
-import uet.oop.bomberman.entities.LayeredEntity;
-import uet.oop.bomberman.entities.bomb.Bomb;
 
 public abstract class Enemy extends Character {
-
 	protected int _points;
 	
 	protected double _speed;
@@ -81,32 +78,26 @@ public abstract class Enemy extends Character {
 		// TODO: sử dụng canMove() để kiểm tra xem có thể di chuyển tới điểm đã tính toán hay không
 		// TODO: sử dụng move() để di chuyển
 		// TODO: nhớ cập nhật lại giá trị cờ _moving khi thay đổi trạng thái di chuyển
-            int xa = 0, ya = 0;
-            if (_steps <= 0) {
-                _direction = _ai.calculateDirection();
-                _steps = MAX_STEPS;
-            }
-
-            if (_direction == 0) {
-                ya--;
-            }
-            if (_direction == 2) {
-                ya++;
-            }
-            if (_direction == 3) {
-                xa--;
-            }
-            if (_direction == 1) {
-                xa++;
-            }
-            if (canMove(xa, ya)) {
-                _steps -= 1 + rest;
-                move(xa * _speed, ya * _speed);
-                _moving = true;
-            } else {
-                _steps = 0;
-                _moving = false;
-            }
+                // đã sửa. 
+                int xa = 0, ya = 0;
+		if(_steps <= 0){
+			_direction = _ai.calculateDirection();
+			_steps = MAX_STEPS;
+		}
+			
+		if(_direction == 0) ya--; 
+		if(_direction == 2) ya++;
+		if(_direction == 3) xa--;
+		if(_direction == 1) xa++;
+		
+		if(canMove(xa, ya)) {
+			_steps -= 1 + rest;
+			move(xa * _speed, ya * _speed);
+			_moving = true;
+		} else {
+			_steps = 0;
+			_moving = false;
+		}
 	}
 	
 	@Override
@@ -119,8 +110,12 @@ public abstract class Enemy extends Character {
 	@Override
 	public boolean canMove(double x, double y) {
 		// TODO: kiểm tra có đối tượng tại vị trí chuẩn bị di chuyển đến và có thể di chuyển tới đó hay không
-                double xr = _x, yr = _y - 16;
+                
+                // đã sửa. 
+                double xr = _x, yr = _y - 16; //subtract y to get more accurate results
 		
+		//the thing is, subract 15 to 16 (sprite size), so if we add 1 tile we get the next pixel tile with this
+		//we avoid the shaking inside tiles with the help of steps
 		if(_direction == 0) { yr += _sprite.getSize() -1 ; xr += _sprite.getSize()/2; } 
 		if(_direction == 1) {yr += _sprite.getSize()/2; xr += 1;}
 		if(_direction == 2) { xr += _sprite.getSize()/2; yr += 1;}
@@ -129,36 +124,38 @@ public abstract class Enemy extends Character {
 		int xx = Coordinates.pixelToTile(xr) +(int)x;
 		int yy = Coordinates.pixelToTile(yr) +(int)y;
 		
-		Entity a = _board.getEntity(xx, yy, this);
+		Entity a = _board.getEntity(xx, yy, this); //entity of the position we want to go
 		
-		return collide(a);
-        }
+		return a.collide(this);
+	}
 
 	@Override
 	public boolean collide(Entity e) {
+		// TODO: xử lý va chạm với Flame
+		// TODO: xử lý va chạm với Bomber
+                // đã sửa. 
+            if (e instanceof Flame) {
+                kill();
+                return false;
+            }
+
             if (e instanceof Bomber) {
-                double x1 =this.getX();
-                double x2=this.getY();
-                double e1= e.getX();
-                double e2 =e.getY();
+                double x1 = this.getX();
+                double x2 = this.getY();
+                double e1 = e.getX();
+                double e2 = e.getY();
                 double z1 = this.getSprite().getRealWidth();
                 double z2 = this.getSprite().getRealHeight();
                 double m1 = e.getSprite().getRealWidth();
                 double m2 = e.getSprite().getRealHeight();
                 if (Math.abs(x1 - e1) < (z1 + m1) / 2) {
                     if (Math.abs(x2 - e2) < (z2 + m2) / 2) {
-                        ((Bomber)e).kill();
+                        ((Bomber) e).kill();
                         return false;
                     }
                 }
             }
-            if (e instanceof Flame) {
-                kill();
-                return false;
-            }
-//            
-            if(e instanceof LayeredEntity || !e.getSprite().equal(Sprite.grass) || e instanceof Bomb)
-                return false;
+		
             return true;
 	}
 	
@@ -184,7 +181,5 @@ public abstract class Enemy extends Character {
 		}
 	}
 	
-        public double getSpeedEnemy() {return _speed;}
-        
 	protected abstract void chooseSprite();
 }

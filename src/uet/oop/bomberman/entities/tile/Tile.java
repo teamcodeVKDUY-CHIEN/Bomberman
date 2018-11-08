@@ -1,7 +1,6 @@
 package uet.oop.bomberman.entities.tile;
 
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.bomb.Flame;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.level.Coordinates;
@@ -24,7 +23,7 @@ public abstract class Tile extends Entity {
 	 */
 	@Override
 	public boolean collide(Entity e) {
-            return false;
+		return false;
 	}
 	
 	@Override

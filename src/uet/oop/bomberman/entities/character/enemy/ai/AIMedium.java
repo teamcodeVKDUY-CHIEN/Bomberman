@@ -1,66 +1,63 @@
 package uet.oop.bomberman.entities.character.enemy.ai;
 
-import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.enemy.Enemy;
-import uet.oop.bomberman.graphics.Sprite;
 
 public class AIMedium extends AI {
+	Bomber _bomber;
+	Enemy _e;
+	
+	public AIMedium(Bomber bomber, Enemy e) {
+		_bomber = bomber;
+		_e = e;
+	}
 
-    Bomber _bomber;
-    Enemy _e;
+	@Override
+	public int calculateDirection() {
+		// TODO: cài đặt thuật toán tìm đường đi
+                // đã sửa. 
+                int director = random.nextInt(4);
+                if (_bomber == null || director >= 3) {
+                    return random.nextInt(4);
+                }
+                if (director == 1) {
+                    int v = calculateRowDirection();
+                    if (v != -1) {
+                        return v;
+                    } else {
+                        return calculateColDirection();
+                    }
 
-    public AIMedium(Bomber bomber, Enemy e) {
-        _bomber = bomber;
-        _e = e;
-    }
+                }
+                if (director == 2) {
+                    int h = calculateColDirection();
 
-    @Override
-    public int calculateDirection() {
-        // TODO: cài đặt thuật toán tìm đường đi
-        //if(_e.canMove(_e.getX()+_e.getSpeedEnemy(), 0))
-        int director = random.nextInt(4);
-        if (_bomber == null || director >= 3) {
-            return random.nextInt(4);
-        }
-        if (director == 1) {
-            int v = calculateRowDirection();
-            if (v != -1) {
-                return v;
-            } else {
-                return calculateColDirection();
-            }
-
-        }
-        if (director == 2) {
-            int h = calculateColDirection();
-
-            if (h != -1) {
-                return h;
-            } else {
-                return calculateRowDirection();
-            }
-        }
-        return 4;
-    }
-
-    protected int calculateColDirection() {
-        if (_bomber.getXTile() < _e.getXTile()) {
-            return 3;
-        } else if (_bomber.getXTile() > _e.getXTile()) {
-            return 1;
-        }
-
-        return -1;
-    }
-
-    protected int calculateRowDirection() {
-        if (_bomber.getYTile() < _e.getYTile()) {
-            return 0;
-        } else if (_bomber.getYTile() > _e.getYTile()) {
-            return 2;
-        }
-        return -1;
-    }
+                    if (h != -1) {
+                        return h;
+                    } else {
+                        return calculateRowDirection();
+                    }
+                }
+                return 4;
+	}
+        
+        // add function. 
+        
+        protected int calculateColDirection() {
+		if(_bomber.getXTile() < _e.getXTile())
+			return 3;
+		else if(_bomber.getXTile() > _e.getXTile())
+			return 1;
+		
+		return -1;
+	}
+	
+	protected int calculateRowDirection() {
+		if(_bomber.getYTile() < _e.getYTile())
+			return 0;
+		else if(_bomber.getYTile() > _e.getYTile())
+			return 2;
+		return -1;
+	}
 
 }

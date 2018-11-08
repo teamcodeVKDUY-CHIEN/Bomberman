@@ -4,10 +4,6 @@ import uet.oop.bomberman.entities.tile.destroyable.DestroyableTile;
 import uet.oop.bomberman.graphics.Screen;
 
 import java.util.LinkedList;
-import uet.oop.bomberman.entities.bomb.Flame;
-import uet.oop.bomberman.entities.bomb.FlameSegment;
-import uet.oop.bomberman.entities.character.Bomber;
-import uet.oop.bomberman.entities.tile.Grass;
 
 /**
  * Chứa và quản lý nhiều Entity tại cùng một vị trí
@@ -55,10 +51,6 @@ public class LayeredEntity extends Entity {
 		}
 	}
 	
-        public int sizeEntitie(){
-            return _entities.size();
-        }
-        
 	public void addBeforeTop(Entity e) {
 		_entities.add(_entities.size() - 1, e);
 	}
@@ -66,13 +58,8 @@ public class LayeredEntity extends Entity {
 	@Override
 	public boolean collide(Entity e) {
 		// TODO: lấy entity trên cùng ra để xử lý va chạm
-                if(getTopEntity().collide(e))
-                {
-                    if(e instanceof Bomber)
-                        this.clearRemoved();    
-                    return true;
-                }
-		return false;
+                // đã sửa. 
+		return getTopEntity().collide(e);
 	}
 
 }

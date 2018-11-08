@@ -10,14 +10,14 @@ import uet.oop.bomberman.graphics.Screen;
  */
 public abstract class Character extends AnimatedEntitiy {
 	
-	public Board _board;
+	protected Board _board;
 	protected int _direction = -1;
 	protected boolean _alive = true;
 	protected boolean _moving = false;
 	public int _timeAfter = 40;
 	
 	public Character(int x, int y, Board board) {
-		_x=x;
+		_x = x;
 		_y = y;
 		_board = board;
 	}

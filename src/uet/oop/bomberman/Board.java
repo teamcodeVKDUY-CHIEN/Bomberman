@@ -17,7 +17,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import uet.oop.bomberman.entities.LayeredEntity;
+import uet.oop.bomberman.entities.tile.item.Item;
 
 /**
  * Quản lý thao tác điều khiển, load level, render các màn hình của game
@@ -72,9 +72,8 @@ public class Board implements IRender {
 		int y0 = Screen.yOffset >> 4;
 		int y1 = (Screen.yOffset + screen.getHeight()) / Game.TILES_SIZE; //render one tile plus to fix black margins
 		
-                
-		for (int y = y0; y < 13; y++) {
-			for (int x = x0; x < 31; x++) {
+		for (int y = y0; y < y1; y++) {
+			for (int x = x0; x < x1; x++) {
 				_entities[x + y * _levelLoader.getWidth()].render(screen);
 			}
 		}
@@ -154,7 +153,7 @@ public class Board implements IRender {
 		
 		res = getCharacterAtExcluding((int)x, (int)y, m);
 		if( res != null) return res;
-                
+		
 		res = getEntityAt((int)x, (int)y);
 		
 		return res;
@@ -164,8 +163,6 @@ public class Board implements IRender {
 		return _bombs;
 	}
 	
-        //public 
-        
 	public Bomb getBombAt(double x, double y) {
 		Iterator<Bomb> bs = _bombs.iterator();
 		Bomb b;
@@ -178,20 +175,6 @@ public class Board implements IRender {
 		return null;
 	}
 
-        public Character getCharacterAt(double x, double y) {
-		Iterator<Character> itr = _characters.iterator();
-		
-		Character cur;
-		while(itr.hasNext()) {
-			cur = itr.next();
-			
-			if(cur.getXTile() == x && cur.getYTile() == y)
-				return cur;
-		}
-		
-		return null;
-        }
-        
 	public Bomber getBomber() {
 		Iterator<Character> itr = _characters.iterator();
 		
@@ -330,6 +313,18 @@ public class Board implements IRender {
 			return this._time--;
 	}
 
+        // add function Item of Bomber.
+        public boolean isItemUsed(int x, int y, int level) {
+		Item p;
+		for (int i = 0; i < Bomber._listItem.size(); i++) {
+			p = Bomber._listItem.get(i);
+			if(p.getX() == x && p.getY() == y && level == p.getLevel())
+				return true;
+		}
+		
+		return false;
+	}
+        
 	public Keyboard getInput() {
 		return _input;
 	}

@@ -1,14 +1,21 @@
 package uet.oop.bomberman.entities;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 import uet.oop.bomberman.graphics.IRender;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.level.Coordinates;
+import java.util.concurrent.TimeUnit; 
 
 /**
  * Lớp đại diện cho tất cả thực thể trong game (Bomber, Enemy, Wall, Brick,...)
  */
-public abstract class Entity implements IRender{
+public abstract class Entity implements IRender {
 
 	protected double _x, _y;
 	protected boolean _removed = false;
@@ -62,4 +69,15 @@ public abstract class Entity implements IRender{
 	public int getYTile() {
 		return Coordinates.pixelToTile(_y - _sprite.SIZE / 2);
 	}
+        
+        // add method play music. 
+        public void playMusicObject(String path, int time) throws InterruptedException{
+            try{
+                InputStream music = new FileInputStream(new File(path)); 
+                AudioStream audios = new AudioStream(music); 
+                AudioPlayer.player.start(audios);  
+            }catch(IOException e){
+                System.out.println(e.getMessage());
+            }
+        } 
 }

@@ -8,6 +8,12 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.concurrent.TimeUnit;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 /**
  * Tạo vòng lặp cho game, lưu trữ một vài tham số cấu hình toàn cục,
@@ -15,13 +21,15 @@ import java.awt.image.DataBufferInt;
  */
 public class Game extends Canvas {
 
-	public static final int TILES_SIZE = 16,WIDTH = TILES_SIZE * (31 / 2),HEIGHT = 13 * TILES_SIZE;
+	public static final int TILES_SIZE = 16,
+							WIDTH = TILES_SIZE * (31 / 2),
+							HEIGHT = 13 * TILES_SIZE;
 
 	public static int SCALE = 3;
 	
 	public static final String TITLE = "BombermanGame";
-	
-	private static final int BOMBRATE = 1;
+	// sửa số bomb.
+	private static final int BOMBRATE = 3;
 	private static final int BOMBRADIUS = 1;
 	private static final double BOMBERSPEED = 1.0;
 	
@@ -48,6 +56,10 @@ public class Game extends Canvas {
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 	
+        
+        // add atribute.
+        AudioStream audios; 
+        
 	public Game(Frame frame) {
 		_frame = frame;
 		_frame.setTitle(TITLE);
@@ -57,6 +69,7 @@ public class Game extends Canvas {
 		
 		_board = new Board(this, _input, screen);
 		addKeyListener(_input);
+                
 	}
 	
 	
@@ -108,7 +121,13 @@ public class Game extends Canvas {
 	
 	public void start() {
 		_running = true;
-		
+		// add serfdom play music. 
+                try{
+                    this.OpenFileMusic("D:\\Code\\Project2\\BommerOfiical\\musicLevel\\04_Level 1.wav");
+                }catch(InterruptedException e){
+                    System.out.println(e.getMessage());
+                }
+                // the end serfdom. 
 		long  lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
 		final double ns = 1000000000.0 / 60.0; //nanosecond, 60 frames per second
@@ -190,7 +209,28 @@ public class Game extends Canvas {
 	}
 	
 	public void pause() {
+                // add chức năng tắt nhạc. 
+                this.CloseMusic();
+                // ... 
 		_paused = true;
+                
 	}
 	
+        // add function play music. 
+        void OpenFileMusic(String path) throws InterruptedException{
+            InputStream music; 
+            try{
+
+                music = new FileInputStream(new File(path)); 
+                audios = new AudioStream(music); 
+                AudioPlayer.player.start(audios);
+
+            }catch(Exception e){
+                System.out.println(e);
+            }
+        }
+        void CloseMusic(){
+            AudioPlayer.player.stop(audios);
+        }
+        
 }

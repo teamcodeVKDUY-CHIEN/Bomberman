@@ -138,4 +138,11 @@ public class Bomb extends AnimatedEntitiy {
 
             return false;
 	}
+        
+        public boolean equal(Bomb e)
+        {
+            if(_x == e._x && _y==e._y)
+                return true;
+            return false;
+        }
 }

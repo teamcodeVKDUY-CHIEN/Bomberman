@@ -89,12 +89,25 @@ public class Bomber extends Character {
         {
             int xt = Coordinates.pixelToTile(_x + _sprite.getSize() / 2);
             int yt = Coordinates.pixelToTile( (_y + _sprite.getSize() / 2) - _sprite.getSize() );
-            placeBomb(xt,yt);
-            Game.addBombRate(-1);
-            _timeBetweenPutBombs=30;
+            System.out.println(xt+"--"+yt+"---"+_bombs.size());
+            if(bombTrue(xt, yt))
+            {
+                placeBomb(xt,yt);
+                Game.addBombRate(-1);
+                _timeBetweenPutBombs=30;
+            }
         }
     }
-
+    
+    private boolean bombTrue(int xt,int yt)
+    {
+        Bomb b = new Bomb(xt, yt, _board);
+        for(Bomb bom: _board.getBombs())
+            if(bom.equal(b))
+                return false;
+        return true;
+    }
+    
     protected void placeBomb(int x, int y) {
         // TODO: thực hiện tạo đối tượng bom, đặt vào vị trí (x, y)
         Bomb b =new Bomb(x, y, _board);
@@ -231,12 +244,12 @@ public class Bomber extends Character {
             return ((Bomb)e).collide(this);
         }
         if (e instanceof LayeredEntity) {
-             if(((LayeredEntity)e).sizeEntitie()>1)
-                 return false;
+             if(((LayeredEntity)e).collide(this))
+                 return true;
         }
-        if(e instanceof Wall)
-            return false;
-        return true;
+        if(e instanceof Grass)
+            return true;
+        return false;
     }
 
     private void chooseSprite() {

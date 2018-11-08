@@ -33,6 +33,7 @@ public class DestroyableTile extends Tile {
 
 	public void destroy() {
 		_destroyed = true;
+                _removed=true;
 	}
 	
 	@Override

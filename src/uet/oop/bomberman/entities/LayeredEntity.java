@@ -5,6 +5,8 @@ import uet.oop.bomberman.graphics.Screen;
 
 import java.util.LinkedList;
 import uet.oop.bomberman.entities.bomb.Flame;
+import uet.oop.bomberman.entities.bomb.FlameSegment;
+import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.tile.Grass;
 
 /**
@@ -64,7 +66,13 @@ public class LayeredEntity extends Entity {
 	@Override
 	public boolean collide(Entity e) {
 		// TODO: lấy entity trên cùng ra để xử lý va chạm
-		return getTopEntity().collide(e);
+                if(getTopEntity().collide(e))
+                {
+                    if(e instanceof Bomber)
+                        this.clearRemoved();    
+                    return true;
+                }
+		return false;
 	}
 
 }

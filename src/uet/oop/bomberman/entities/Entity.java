@@ -8,7 +8,7 @@ import uet.oop.bomberman.level.Coordinates;
 /**
  * Lớp đại diện cho tất cả thực thể trong game (Bomber, Enemy, Wall, Brick,...)
  */
-public abstract class Entity implements IRender {
+public abstract class Entity implements IRender{
 
 	protected double _x, _y;
 	protected boolean _removed = false;

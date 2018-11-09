@@ -61,7 +61,9 @@ public class Bomber extends Character {
         if (_alive)
             chooseSprite();
         else
+        {
             _sprite = Sprite.player_dead1;
+        }
 
         screen.renderEntity((int) _x, (int) _y - _sprite.SIZE, this);
     }
@@ -122,6 +124,10 @@ public class Bomber extends Character {
 
     }
 
+    public boolean isDead()
+    {
+        return !_alive;
+    }
     @Override
     public void kill() {
         if (!_alive) return;

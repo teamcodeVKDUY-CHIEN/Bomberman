@@ -96,7 +96,7 @@ public class Bomb extends AnimatedEntitiy {
 		}
                 // xử lý âm thanh nổ. 
                 try{
-                    this.playMusicObject("D:\\Code\\Project2\\BommerOfiical\\musicLevel\\TiengBom-Ver1.wav", 1);
+                    this.playMusicObject("TiengBom-Ver1.wav", 1);
                 }catch(InterruptedException e){
                     System.out.println(e.getMessage());
                 }

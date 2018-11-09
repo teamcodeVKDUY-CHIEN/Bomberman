@@ -35,7 +35,7 @@ public class Frame extends JFrame {
 		setLocationRelativeTo(null);
 		setVisible(true);	
 		
-		_game.start();
+                _game.start();                
 	}
 	
 	public void setTime(int time) {
@@ -46,4 +46,5 @@ public class Frame extends JFrame {
 		_infopanel.setPoints(points);
 	}
 	
+        
 }

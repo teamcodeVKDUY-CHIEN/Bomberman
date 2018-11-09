@@ -46,10 +46,10 @@ public class Board implements IRender {
 		loadLevel(1); //start in level 1
 	}
 	
+        
 	@Override
 	public void update() {
 		if( _game.isPaused() ) return;
-		
 		updateEntities();
 		updateCharacters();
 		updateBombs();
@@ -83,6 +83,15 @@ public class Board implements IRender {
 		
 	}
 	
+//        public void newGame() {
+//		resetProperties();
+//		nextLevel();
+//	}
+        
+        public void restartLevel() {
+		loadLevel(_levelLoader.getLevel());
+	}
+        
 	public void nextLevel() {
 		loadLevel(_levelLoader.getLevel() + 1);
 	}
@@ -95,6 +104,11 @@ public class Board implements IRender {
 		_characters.clear();
 		_bombs.clear();
 		_messages.clear();
+                 try{
+                    _game.OpenFileMusic("04_Level 1.wav");
+                }catch(InterruptedException e){
+                    System.out.println(e.getMessage());
+                }
 		
 		try {
 			_levelLoader = new FileLevelLoader(this, level);
@@ -108,13 +122,15 @@ public class Board implements IRender {
 	
 	protected void detectEndGame() {
 		if(_time <= 0)
-			endGame();
+                    endGame();
+                else if(_game._screenDelay==3)
+                    restartLevel();
 	}
 	
 	public void endGame() {
 		_screenToShow = 1;
 		_game.resetScreenDelay();
-		_game.pause();
+                _game.pause();
 	}
 	
 	public boolean detectNoEnemies() {
@@ -141,6 +157,18 @@ public class Board implements IRender {
 		}
 	}
 	
+        
+//        @SuppressWarnings("static-access")
+//	private void resetProperties() {
+//		_points = Game.POINTS;
+//		Bomber._listItem.clear();
+//		
+//		Game.bomberSpeed = 1.0;
+//		_game.bombRadius = 1;
+//		_game.bombRate = 1;
+//		
+//	}
+//        
 	public Entity getEntity(double x, double y, Character m) {
 		
 		Entity res = null;

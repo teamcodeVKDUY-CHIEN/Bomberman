@@ -25,6 +25,6 @@ public class SpeedItem extends Item {
         @Override
         public void setValues() {
             _active = true; 
-            Game.addBomberSpeed(2);
+            Game.addBomberSpeed(0.3);
         }
 }

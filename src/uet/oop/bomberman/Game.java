@@ -123,7 +123,7 @@ public class Game extends Canvas {
 		_running = true;
 		// add serfdom play music. 
                 try{
-                    this.OpenFileMusic("D:\\Code\\Project2\\BommerOfiical\\musicLevel\\04_Level 1.wav");
+                    this.OpenFileMusic("04_Level 1.wav");
                 }catch(InterruptedException e){
                     System.out.println(e.getMessage());
                 }
@@ -144,19 +144,17 @@ public class Game extends Canvas {
 				updates++;
 				delta--;
 			}
-			
-			if(_paused) {
-				if(_screenDelay <= 0) {
-					_board.setShow(-1);
-					_paused = false;
-				}
-					
-				renderScreen();
-			} else {
-				renderGame();
-			}
-				
-			
+
+                        if (_paused) {
+                            if (_screenDelay <= 0) {
+                                _board.setShow(-1);
+                                _paused = false;
+                            }
+                            renderScreen();
+                        } 
+                        else 
+                            renderGame();
+
 			frames++;
 			if(System.currentTimeMillis() - timer > 1000) {
 				_frame.setTime(_board.subtractTime());

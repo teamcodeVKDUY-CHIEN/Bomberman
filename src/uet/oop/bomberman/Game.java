@@ -1,5 +1,6 @@
 package uet.oop.bomberman;
 
+import developGame.sound;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.gui.Frame;
 import uet.oop.bomberman.input.Keyboard;
@@ -29,7 +30,7 @@ public class Game extends Canvas {
 	
 	public static final String TITLE = "BombermanGame";
 	// sửa số bomb.
-	private static final int BOMBRATE = 3;
+	private static final int BOMBRATE = 1;
 	private static final int BOMBRADIUS = 1;
 	private static final double BOMBERSPEED = 1.0;
 	
@@ -55,10 +56,10 @@ public class Game extends Canvas {
 	
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
-	
-        
-        // add atribute.
-        AudioStream audios; 
+
+        //public int _live;
+        // thuộc tính âm thanh. 
+        public sound ostGame=new sound(TITLE); 
         
 	public Game(Frame frame) {
 		_frame = frame;
@@ -68,8 +69,10 @@ public class Game extends Canvas {
 		_input = new Keyboard();
 		
 		_board = new Board(this, _input, screen);
+                //_live=3;
 		addKeyListener(_input);
                 
+                // khởi tạo âm thanh game. 
 	}
 	
 	
@@ -116,17 +119,25 @@ public class Game extends Canvas {
 
 	private void update() {
 		_input.update();
-		_board.update();
+               if(_input.space && _screenDelay==3)
+               {
+                   //_live--;
+                   _board.restartLevel();
+               }
+                else
+                   _board.update();
 	}
 	
 	public void start() {
 		_running = true;
 		// add serfdom play music. 
-                try{
-                    this.OpenFileMusic("04_Level 1.wav");
-                }catch(InterruptedException e){
-                    System.out.println(e.getMessage());
-                }
+//                try{
+//                    ostGame = new sound("04_Level 1.wav"); 
+//                    ostGame.CloseMusic();
+//                    ostGame.OpenFileMusic();
+//                }catch(InterruptedException e){
+//                    System.out.println(e.getMessage());
+//                }
                 // the end serfdom. 
 		long  lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
@@ -208,27 +219,11 @@ public class Game extends Canvas {
 	
 	public void pause() {
                 // add chức năng tắt nhạc. 
-                this.CloseMusic();
+                ostGame.CloseMusic();
                 // ... 
 		_paused = true;
                 
 	}
 	
-        // add function play music. 
-        void OpenFileMusic(String path) throws InterruptedException{
-            InputStream music; 
-            try{
-
-                music = new FileInputStream(new File(path)); 
-                audios = new AudioStream(music); 
-                AudioPlayer.player.start(audios);
-
-            }catch(Exception e){
-                System.out.println(e);
-            }
-        }
-        void CloseMusic(){
-            AudioPlayer.player.stop(audios);
-        }
-        
+         
 }

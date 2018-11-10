@@ -9,6 +9,7 @@ import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.level.Coordinates;
 import uet.oop.bomberman.entities.character.Character; 
+import uet.oop.bomberman.entities.character.enemy.Kondoria;
 
 public class Bomb extends AnimatedEntitiy {
 
@@ -133,7 +134,9 @@ public class Bomb extends AnimatedEntitiy {
                     _timeToExplode=0;
                     return true;
             }
-
+            
+            if(e instanceof Kondoria)
+                return true;
             return false;
 	}
         

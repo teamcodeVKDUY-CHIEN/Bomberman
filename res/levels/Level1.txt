@@ -1,32 +1,39 @@
 1 13 31
 ###############################
-#p    s** *    *   *  * * *   #
-#b# # #*# # #*#*# # # #*#*#*# #
-#   b    f***  *      *   * * #
+#p     ** *  1 * 2 *  * * *   #
+# # # #*# # #*#*# # # #*#*#*# #
+#  x*     ***  *  1   * 2 * * #
 # # # # # #*# # #*#*# # # # #*#
-#f  1   f  x **  *  *         #
+#f         x **  *  *   1     #
 # # # # # # # # # #*# #*# # # #
 #*  *      *  *      *        #
 # # # # #*# # # #*#*# # # # # #
-#*    **  *       *           #
+#*45 3**  *       *           #
 # #*# # # # # # #*# # # # # # #
-#         2 *   *  *          #
+#           *   *  *          #
 ###############################
 
-Meta data:
-(Number or Level) (Rows) (Columns)
 
-Info Tiles:
+Mô t? c?u trúc t?p c?u hình màn choi:
+1/ Dòng d?u tiên bao g?m 3 s? nguyên L, R, C:
+L - s? th? t? màn choi
+R - s? hàng c?a b?n d?
+C - s? c?t c?a b?n d?
+
+2/ R dòng ti?p theo, m?i dòng có C kí t?. M?i kí t? d?i di?n cho m?t d?i tu?ng trên b?n d?:
+Tiles:
 # - Wall
 * - Brick
 x - Portal
 
-Mobs:
-p - Player
-1 - Balloom
+Character:
+p - Bomber
+1 - Balloon
 2 - Oneal
 
-Powerups:
-b - Powerup Bombs
-f - Powerup Flames
-s - Powerup Speed
+Items:
+b - Bomb Item
+f - Flame Item
+s - Speed Item
+
+Kí t? khác các kí t? trên - Grass

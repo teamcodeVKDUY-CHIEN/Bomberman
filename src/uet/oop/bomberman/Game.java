@@ -1,6 +1,6 @@
 package uet.oop.bomberman;
 
-import developGame.sound;
+import developGame.Audios;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.gui.Frame;
 import uet.oop.bomberman.input.Keyboard;
@@ -9,12 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.concurrent.TimeUnit;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
+
 
 /**
  * Tạo vòng lặp cho game, lưu trữ một vài tham số cấu hình toàn cục,
@@ -59,7 +54,8 @@ public class Game extends Canvas {
 
         //public int _live;
         // thuộc tính âm thanh. 
-        public sound ostGame=new sound(TITLE); 
+        public Audios ostGame = new Audios("04_Level 1.wav", true); 
+      
         
 	public Game(Frame frame) {
 		_frame = frame;
@@ -72,7 +68,6 @@ public class Game extends Canvas {
                 //_live=3;
 		addKeyListener(_input);
                 
-                // khởi tạo âm thanh game. 
 	}
 	
 	
@@ -130,14 +125,9 @@ public class Game extends Canvas {
 	
 	public void start() {
 		_running = true;
-		// add serfdom play music. 
-//                try{
-//                    ostGame = new sound("04_Level 1.wav"); 
-//                    ostGame.CloseMusic();
-//                    ostGame.OpenFileMusic();
-//                }catch(InterruptedException e){
-//                    System.out.println(e.getMessage());
-//                }
+                
+                ostGame.Player();
+		
                 // the end serfdom. 
 		long  lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
@@ -218,8 +208,9 @@ public class Game extends Canvas {
 	}
 	
 	public void pause() {
-                // add chức năng tắt nhạc. 
-                ostGame.CloseMusic();
+                // add chức năng tắt nhạc.
+                
+                ostGame.PauseAudio();
                 // ... 
 		_paused = true;
                 

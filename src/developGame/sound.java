@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.swing.JFrame;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
@@ -21,7 +22,6 @@ public class sound {
     public void OpenFileMusic() throws InterruptedException{
         InputStream music; 
         try{
-
             music = new FileInputStream(new File(path)); 
             audios = new AudioStream(music); 
             AudioPlayer.player.start(audios);
@@ -58,5 +58,16 @@ public class sound {
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
+    }
+    
+    
+    public static void main(String[] args){
+        sound S = new sound(""); 
+        
+        File F = new File("D:\\Code\\BomberVuKhuongDuy\\Bomberman\\04_Level 1.wav"); 
+        
+        JFrame MainF = new JFrame("testMusic"); 
+        
+        sound.PlaySound(F);
     }
 }

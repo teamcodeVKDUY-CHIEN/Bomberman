@@ -1,5 +1,6 @@
 package uet.oop.bomberman;
 
+import developGame.Audios;
 import developGame.sound;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Message;
@@ -38,7 +39,8 @@ public class Board implements IRender {
 	
 	private int _time = Game.TIME;
 	private int _points = Game.POINTS;
-	
+        // thiết lập sounds cho game khi chơi lại hoặc sang cửa khác.
+        
 	public Board(Game game, Keyboard input, Screen screen) {
 		_game = game;
 		_input = input;
@@ -85,10 +87,13 @@ public class Board implements IRender {
 	}
         
         public void restartLevel() {
+    
+//            _game.ostGame.Player();
             loadLevel(_levelLoader.getLevel());
 	}
         
 	public void nextLevel() {
+            
 		loadLevel(_levelLoader.getLevel() + 1);
 	}
 	
@@ -100,6 +105,8 @@ public class Board implements IRender {
 		_characters.clear();
 		_bombs.clear();
 		_messages.clear();
+                
+                _game.ostGame.Player();
 //                 try{
 //                    _game.ostGame = new sound("04_Level 1.wav");
 //                    _game.ostGame.CloseMusic();
@@ -124,6 +131,8 @@ public class Board implements IRender {
 	}
 	
 	public void endGame() {
+                // test dừng nhạc khi tắt game. 
+                _game.ostGame.PauseAudio();
 		_screenToShow = 1;
 		_game.resetScreenDelay();
                 _game.pause();

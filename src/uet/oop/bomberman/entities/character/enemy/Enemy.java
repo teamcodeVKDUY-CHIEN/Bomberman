@@ -139,6 +139,9 @@ public abstract class Enemy extends Character {
                 return false;
             }
             
+            if(this instanceof Enemy && e instanceof Enemy)
+                return false;
+            
             if (e instanceof Bomber) {
                 double x1 = this.getX();
                 double x2 = this.getY();

@@ -4,7 +4,9 @@ import uet.oop.bomberman.entities.tile.destroyable.DestroyableTile;
 import uet.oop.bomberman.graphics.Screen;
 
 import java.util.LinkedList;
+import uet.oop.bomberman.entities.bomb.Flame;
 import uet.oop.bomberman.entities.character.enemy.Kondoria;
+import uet.oop.bomberman.entities.tile.destroyable.Brick;
 
 /**
  * Chứa và quản lý nhiều Entity tại cùng một vị trí
@@ -60,6 +62,7 @@ public class LayeredEntity extends Entity {
 	public boolean collide(Entity e) {
 		// TODO: lấy entity trên cùng ra để xử lý va chạm
                 // đã sửa. 
+                    
                 if(e instanceof Kondoria)
                     return true;
 		return getTopEntity().collide(e);
